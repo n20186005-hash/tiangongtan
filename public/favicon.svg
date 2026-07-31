@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="天公壇公園">
+  <rect width="64" height="64" rx="18" fill="#182c25"/>
+  <path d="M14 38h36v8H14z" fill="#d7a64b"/>
+  <path d="M18 36l14-18 14 18H18z" fill="#f4d48a"/>
+  <path d="M26 39h12v7H26z" fill="#6f2e1d"/>
+  <circle cx="32" cy="21" r="4" fill="#fff4cb"/>
+</svg>

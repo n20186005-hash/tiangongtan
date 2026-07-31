@@ -1,0 +1,15 @@
+---
+import { siteInfo } from '@/data/site';
+---
+<div class="map-card" aria-label="天公壇公園 Google 地圖">
+  <iframe
+    src={siteInfo.mapEmbedSrc}
+    width="600"
+    height="450"
+    style="border:0;"
+    allowfullscreen
+    loading="lazy"
+    referrerpolicy="strict-origin-when-cross-origin"
+    title="天公壇公園地圖"
+  ></iframe>
+</div>

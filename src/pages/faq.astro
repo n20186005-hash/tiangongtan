@@ -1,0 +1,25 @@
+---
+export const prerender = true;
+
+import FaqList from '@/components/FaqList.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { buildFaqSchema } from '@/lib/schema';
+---
+<BaseLayout title="FAQ 常見問答" description="天公壇公園門票、交通、停車、親子、最佳時間與建議停留常見問答。">
+  <Fragment slot="jsonld">
+    <JsonLd data={buildFaqSchema()} />
+  </Fragment>
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">行前解答</span>
+      <h1>常見問答</h1>
+      <p>整理第一次到天公壇公園最常遇到的問題，方便快速決定交通、停留時間與行程順序。</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <FaqList />
+    </div>
+  </section>
+</BaseLayout>

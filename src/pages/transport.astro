@@ -1,0 +1,49 @@
+---
+export const prerender = true;
+
+import MapEmbed from '@/components/MapEmbed.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteInfo, trafficRoutes } from '@/data/site';
+---
+<BaseLayout title="詳細交通與停車" description="前往新竹天公壇公園的台鐵、高鐵、開車、停車與市區動線建議。">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">抵達方式</span>
+      <h1>詳細交通與停車</h1>
+      <p>天公壇公園位在新竹市區，適合用台鐵步行、短程計程車或開車前往；假日與廟會期間建議保留停車緩衝。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split-panel">
+      <div>
+        <SectionHeading eyebrow="交通路線" title="前往方式" text="依照交通工具選擇最適合的路線，抵達後再用步行串接公園、吊橋與周邊小吃。" />
+        <div class="timeline">
+          {trafficRoutes.map((route, index) => (
+            <div class="route-item">
+              <span class="route-number">{index + 1}</span>
+              <div>
+                <h3>{route.title}</h3>
+                <p>{route.detail}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <MapEmbed />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="開車提醒" title="停車資訊" text="公園沒有大型觀光景區式停車場，建議以周邊停車格、鄰近停車空間與步行接駁思維來安排。" />
+      <div class="grid-3">
+        <article class="card dark"><h3>平日</h3><p>通常可先尋找周邊路邊停車格，再步行進入公園與廟埕。</p></article>
+        <article class="card"><h3>假日</h3><p>新竹市區車流較多，若要接城隍廟或北門大街，建議停在市區停車場後步行串遊。</p></article>
+        <article class="card"><h3>活動日</h3><p>遇到廟方活動、節慶或大型人潮時，停車難度會提高，請以現場交通管制與公告為準。</p></article>
+      </div>
+      <p class="notice">地點：{siteInfo.address}。夜間拍照請留意同行者、車流與溪畔動線。</p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,22 @@
+---
+export const prerender = true;
+
+import Gallery from '@/components/Gallery.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+<BaseLayout title="照片牆" description="天公壇公園九龍柱、廟宇外觀、入口、廣場與溪畔綠地照片牆。">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">影像散步</span>
+      <h1>照片牆</h1>
+      <p>用大圖網格集中看天公壇公園的視覺氣質：九龍柱、夜景、入口、廟宇屋脊與溪畔綠地。點擊照片可放大檢視。</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="八景選輯" title="九龍柱、廟埕與溪畔綠意" text="從白天石雕的立體細節、夜間點燈，到廟宇朱紅金飾與公園綠意，依現場視角逐張觀看。" />
+      <Gallery />
+    </div>
+  </section>
+</BaseLayout>

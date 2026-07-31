@@ -1,0 +1,27 @@
+---
+export const prerender = true;
+
+import ItineraryPlanner from '@/components/ItineraryPlanner.astro';
+import MemorialCard from '@/components/MemorialCard.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+<BaseLayout title="行程清單與景點紀念卡" description="使用 localStorage 收藏天公壇公園想去的點，並用 Canvas 在本機合成景點紀念卡。">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">我的旅程</span>
+      <h1>行程清單與紀念卡</h1>
+      <p>這一頁所有互動都在瀏覽器本地完成：行程清單存在 localStorage，照片紀念卡用 Canvas 合成，不需要帳號也不會上傳照片。</p>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container grid-2">
+      <ItineraryPlanner />
+      <div class="round-image"><img src="/images/tiangongtan-park-green.webp" alt="天公壇公園綠地" loading="lazy" decoding="async" /></div>
+    </div>
+  </section>
+  <section class="section">
+    <div class="container">
+      <MemorialCard />
+    </div>
+  </section>
+</BaseLayout>

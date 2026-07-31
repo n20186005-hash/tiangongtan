@@ -1,0 +1,78 @@
+---
+export const prerender = true;
+
+import SectionHeading from '@/components/SectionHeading.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { essentials, foodAreas, nearbyAttractions } from '@/data/site';
+---
+<BaseLayout title="遊園指南" description="天公壇公園門票費用、最佳時段、建議停留、周邊美食與周邊景點整理。">
+  <section class="page-hero">
+    <div class="container">
+      <span class="eyebrow">遊園提案</span>
+      <h1>遊園指南</h1>
+      <p>把天公壇公園當作新竹市區慢遊的一站：看九龍柱、走吊橋、接客雅溪綠廊，再把晚餐留給城隍廟或北門大街。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="行前重點" title="門票、停留時間與最佳時段" text="這裡適合短暫停靠，也能和周邊步道、美食與老街串成半日行程。" />
+      <div class="grid-3">
+        {essentials.map((item, index) => (
+          <article class={`card ${index === 0 ? 'dark' : ''}`}>
+            <h3>{item.label}</h3>
+            <p>{item.value}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split-panel">
+      <div class="round-image">
+        <img src="/images/tiangongtan-day-pillar.jpg" alt="天公壇公園白天九龍柱" loading="lazy" decoding="async" />
+      </div>
+      <div>
+        <SectionHeading eyebrow="散步順序" title="推薦玩法" text="第一次來可用「廟埕—九龍柱—吊橋—溪畔」四段節奏，不需要趕。" />
+        <div class="timeline">
+          <div class="route-item"><span class="route-number">1</span><div><h3>先看天公壇廟埕</h3><p>感受廟宇屋脊、香火與廣場尺度，拍攝建築細節時保持禮貌與安靜。</p></div></div>
+          <div class="route-item"><span class="route-number">2</span><div><h3>走到九龍柱拍地標照</h3><p>白天看雕刻、傍晚看光線，夜間燈光亮起後更適合做旅遊封面。</p></div></div>
+          <div class="route-item"><span class="route-number">3</span><div><h3>接吊橋與客雅溪綠廊</h3><p>把停留延伸到西雅公園方向，適合親子、散步與簡單運動。</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="在地味道" title="周邊美食" text="以新竹市區具代表性的小吃聚落規劃動線，方便依當天營業狀況彈性選擇。" />
+      <div class="grid-3">
+        {foodAreas.map((area) => (
+          <article class="card">
+            <span class="tag">{area.distance}</span>
+            <h3>{area.name}</h3>
+            <p>{area.tip}</p>
+            <ul>
+              {area.ideas.map((idea) => <li>{idea}</li>)}
+            </ul>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="順路探訪" title="周邊景點" text="天公壇公園最大的優勢是靠近新竹市區，可把廟宇、老街、小吃與溪畔綠地一次串起來。" />
+      <div class="grid-3">
+        {nearbyAttractions.map((item) => (
+          <article class="card">
+            <h3>{item.name}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

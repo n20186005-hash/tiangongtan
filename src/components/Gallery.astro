@@ -1,0 +1,60 @@
+---
+import { galleryImages } from '@/data/site';
+
+interface Props {
+  limit?: number;
+}
+const { limit } = Astro.props;
+const images = typeof limit === 'number' ? galleryImages.slice(0, limit) : galleryImages;
+---
+<div class="photo-grid" data-gallery>
+  {images.map((image, index) => (
+    <button
+      class={`gallery-card ${image.shape}`}
+      type="button"
+      data-full={image.src}
+      data-title={image.title}
+      data-note={image.note}
+      aria-label={`放大檢視：${image.title}`}
+    >
+      <img src={image.src} alt={image.alt} loading={index < 2 ? 'eager' : 'lazy'} decoding="async" />
+      <span class="gallery-zoom" aria-hidden="true">放大</span>
+      <span class="gallery-caption">
+        <strong>{image.title}</strong>
+        <span>{image.note}</span>
+      </span>
+    </button>
+  ))}
+</div>
+
+<dialog class="lightbox-dialog" data-lightbox aria-label="照片大圖檢視">
+  <div class="lightbox-body">
+    <button class="lightbox-control lightbox-close" type="button" data-close-lightbox aria-label="關閉大圖">
+      <span aria-hidden="true">×</span>
+    </button>
+    <div class="lightbox-stage" data-lightbox-stage>
+      <button class="lightbox-control lightbox-nav lightbox-prev" type="button" data-lightbox-prev aria-label="上一張照片">
+        <span aria-hidden="true">←</span>
+      </button>
+      <figure class="lightbox-figure">
+        <div class="lightbox-media">
+          <img src="" alt="" data-lightbox-image />
+        </div>
+        <figcaption>
+          <span>
+            <strong data-lightbox-title></strong>
+            <span data-lightbox-note></span>
+          </span>
+          <span class="lightbox-counter" data-lightbox-counter aria-live="polite"></span>
+        </figcaption>
+      </figure>
+      <button class="lightbox-control lightbox-nav lightbox-next" type="button" data-lightbox-next aria-label="下一張照片">
+        <span aria-hidden="true">→</span>
+      </button>
+    </div>
+    <p class="lightbox-help">可使用左右方向鍵切換，按 Esc 關閉</p>
+  </div>
+</dialog>
+<script>
+  import '../scripts/gallery.ts';
+</script>

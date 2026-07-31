@@ -1,0 +1,99 @@
+---
+export const prerender = true;
+
+import FaqList from '@/components/FaqList.astro';
+import Gallery from '@/components/Gallery.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import MapEmbed from '@/components/MapEmbed.astro';
+import SectionHeading from '@/components/SectionHeading.astro';
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { essentials, highlights, siteInfo } from '@/data/site';
+import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
+---
+<BaseLayout title={`${siteInfo.fullName}｜九龍柱與客雅溪畔散步指南`} description={siteInfo.description}>
+  <Fragment slot="jsonld">
+    <JsonLd data={buildPlaceSchema(Astro.site)} />
+    <JsonLd data={buildFaqSchema()} />
+  </Fragment>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">新竹北區 · 客雅溪畔</span>
+        <h1>{siteInfo.name}</h1>
+        <p>{siteInfo.description}</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="/guide/">查看遊園指南</a>
+          <a class="btn" href="/plan/">製作行程與紀念卡</a>
+        </div>
+      </div>
+      <div class="hero-media">
+        <div class="photo-frame">
+          <img src="/images/tiangongtan-night-pillar.jpg" alt="天公壇公園九龍柱夜景" loading="eager" decoding="async" />
+        </div>
+        <div class="floating-note">
+          <strong>最推薦：傍晚到夜間</strong>
+          <span>先看廟埕與草地，再等九龍柱燈光亮起。</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="特色亮點" title="一座把信仰、溪畔與城市休憩放在一起的公園" text="天公壇公園不是大型觀光景區，而是很適合在新竹市區慢慢走、拍一張地標照、帶孩子放風的舒服停靠點。" />
+      <div class="grid-4">
+        {highlights.map((item) => (
+          <article class="card">
+            <span class="icon-badge">{item.icon}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="info-strip">
+        {essentials.map((item) => (
+          <div class="mini">
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container split-panel">
+      <div>
+        <SectionHeading eyebrow="地圖定位" title="地圖與現場位置" text="公園位於新竹天公壇旁，從市區老街、美食圈與新竹車站都能安排成一段短程移動。" />
+        <article class="card dark">
+          <h3>地址</h3>
+          <p>{siteInfo.address}</p>
+        </article>
+      </div>
+      <MapEmbed />
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="現場影像" title="從照片先看公園氣氛" text="從九龍柱的晝夜光線，到廟宇屋脊、入口廣場與溪畔綠地，先找出最想親自走到的畫面。" />
+      <Gallery limit={5} />
+      <div class="button-row">
+        <a class="btn" href="/gallery/">看完整照片牆</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading eyebrow="行前解答" title="常見問答" text="門票、停留時間、交通與親子友善重點，一次先看懂。" />
+      <FaqList />
+    </div>
+  </section>
+</BaseLayout>

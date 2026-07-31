@@ -1,0 +1,62 @@
+---
+import { siteInfo } from '@/data/site';
+---
+<div class="card-maker" data-card-maker>
+  <div class="section-head" style="grid-template-columns: 1fr; margin-bottom: 1.1rem;">
+    <div>
+      <span class="eyebrow">旅程留念</span>
+      <h2>景點紀念卡</h2>
+    </div>
+    <p>拍照、自拍或從相簿選圖，在瀏覽器本地合成紀念卡並下載。照片、文字與成品全程只保存在您的設備。</p>
+  </div>
+
+  <div class="grid-2">
+    <div>
+      <div class="form-grid">
+        <label>
+          上傳照片
+          <input type="file" accept="image/*" data-card-photo />
+        </label>
+        <label>
+          尺寸
+          <select data-card-size>
+            <option value="square">1:1 方形</option>
+            <option value="postcard">明信片直版</option>
+            <option value="story">9:16 直式</option>
+          </select>
+        </label>
+        <label>
+          風格
+          <select data-card-style>
+            <option value="gold">祈光金</option>
+            <option value="jade">溪畔青</option>
+            <option value="night">夜景靛</option>
+          </select>
+        </label>
+        <label>
+          日期
+          <input type="text" data-card-date placeholder="依今日日期自動帶入，可自行修改" />
+        </label>
+      </div>
+      <label class="full-field" style="margin-top: 0.8rem;">
+        標題文字
+        <input type="text" data-card-title value={siteInfo.name} />
+      </label>
+      <label class="full-field" style="margin-top: 0.8rem;">
+        副標文字
+        <input type="text" data-card-subtitle value="新竹北區・客雅溪畔" />
+      </label>
+      <div class="button-row">
+        <button class="btn primary" type="button" data-card-render>生成紀念卡</button>
+        <button class="btn" type="button" data-card-download>下載 PNG</button>
+      </div>
+      <p class="notice">照片僅保存在您的設備；本工具不會上傳照片、文字或輸出成品。</p>
+    </div>
+    <div class="card-preview">
+      <canvas data-card-canvas width="1080" height="1080" aria-label="紀念卡預覽"></canvas>
+    </div>
+  </div>
+</div>
+<script>
+  import '../scripts/memorial-card.ts';
+</script>

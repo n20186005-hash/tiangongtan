@@ -1,0 +1,11 @@
+---
+import { faqItems } from '@/data/site';
+---
+<div class="faq-list">
+  {faqItems.map((item, index) => (
+    <details open={index === 0}>
+      <summary>{item.question}</summary>
+      <p>{item.answer}</p>
+    </details>
+  ))}
+</div>

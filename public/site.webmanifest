@@ -1,0 +1,16 @@
+{
+  "name": "天公壇公園",
+  "short_name": "天公壇",
+  "description": "新竹北區天公壇公園旅遊指南、交通、美食、照片牆與本地行程工具。",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f8f1df",
+  "theme_color": "#182c25",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

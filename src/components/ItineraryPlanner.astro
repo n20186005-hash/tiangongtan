@@ -1,0 +1,30 @@
+---
+import { itineraryItems } from '@/data/site';
+---
+<div class="itinerary-panel" data-itinerary>
+  <div class="section-head" style="grid-template-columns: 1fr; margin-bottom: 1rem;">
+    <div>
+      <span class="eyebrow">裝置內收藏</span>
+      <h2>行程清單</h2>
+    </div>
+    <p>勾選想去的點，清單只保存在目前這台裝置，不登入、不上傳、不經伺服器。</p>
+  </div>
+  <div class="check-list">
+    {itineraryItems.map((item) => (
+      <label class="check-row">
+        <input type="checkbox" value={item.id} data-itinerary-checkbox />
+        <span>
+          <strong>{item.title}</strong>
+          <span class="tag">{item.category}</span>
+        </span>
+      </label>
+    ))}
+  </div>
+  <div class="button-row">
+    <button class="btn" type="button" data-clear-itinerary>清空清單</button>
+    <span class="notice" data-itinerary-status role="status" aria-live="polite">已收藏 0 個點。</span>
+  </div>
+</div>
+<script>
+  import '../scripts/itinerary.ts';
+</script>
