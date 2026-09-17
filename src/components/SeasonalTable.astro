@@ -1,0 +1,76 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+
+const rows = [
+  {
+    season: '春季',
+    months: '3 – 5 月',
+    climate: '氣溫回暖，新竹風仍強，鋒面來時天氣變化快，偶有飄雨。',
+    comfort: '★★★☆☆',
+    activity: '白天散步、廟埕與九龍柱拍照、順遊市區老街。',
+    gear: '薄外套、防風衣物，隨身備傘。'
+  },
+  {
+    season: '夏季',
+    months: '6 – 8 月',
+    climate: '炎熱潮濕，午後易有雷陣雨，7–9 月為颱風好發季。',
+    comfort: '★★☆☆☆',
+    activity: '建議清晨或傍晚前往，夜間看九龍柱點燈最舒服。',
+    gear: '防曬、充足飲水、雨具與防蚊用品。'
+  },
+  {
+    season: '秋季',
+    months: '9 – 11 月',
+    climate: '最穩定舒適，風乾爽、降雨少，能見度與光線適合攝影。',
+    comfort: '★★★★★',
+    activity: '全日散步、親子停留、沿客雅溪綠廊慢走的首選季節。',
+    gear: '輕裝即可，早晚微涼可帶薄外套。'
+  },
+  {
+    season: '冬季',
+    months: '12 – 2 月',
+    climate: '東北季風帶來濕冷，體感比氣溫更低，風勢明顯。',
+    comfort: '★★★☆☆',
+    activity: '白天短暫停留、看九龍柱與廟宇建築線條。',
+    gear: '保暖外套、圍巾，留意防風。'
+  }
+];
+---
+<section class="section" id="seasonal">
+  <div class="container">
+    <SectionHeading
+      eyebrow="季節策略"
+      title="季度遊覽策略表"
+      text="以下依臺灣氣象觀測的常年氣候態，整理新竹（風城）四季的氣候特徵、舒適度與出遊建議，幫你挑對時間前往。"
+    />
+    <div class="table-wrap">
+      <table class="seasonal-table">
+        <thead>
+          <tr>
+            <th>季節</th>
+            <th>月份</th>
+            <th>氣候特徵</th>
+            <th>舒適度</th>
+            <th>推薦活動</th>
+            <th>裝備與注意</th>
+          </tr>
+        </thead>
+        <tbody>
+          {rows.map((row) => (
+            <tr>
+              <th scope="row">{row.season}</th>
+              <td>{row.months}</td>
+              <td>{row.climate}</td>
+              <td class="center">{row.comfort}</td>
+              <td>{row.activity}</td>
+              <td>{row.gear}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="notice">
+      說明：上表為依常年氣候態整理的概略參考，實際天氣請以出發當日的即時預報為準（見上方天氣模組）。
+    </p>
+  </div>
+</section>

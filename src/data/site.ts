@@ -15,8 +15,15 @@ export const siteInfo = {
   latitude: 24.799498,
   longitude: 120.957721,
   ratingValue: '4.5',
+  ratingCount: 3773,
   bestRating: '5',
   priceRange: '免費',
+  postalCode: '300',
+  mapsShareUrl: 'https://maps.app.goo.gl/DZePQZpk2NUmxjPD9',
+  govTourismUrl: 'https://travel.hccg.gov.tw/',
+  nearbyLandmark1: '新竹都城隍廟',
+  nearbyLandmark2: '北門大街',
+  syncDate: '2026 年 9 月',
   openingHoursText: '戶外公園空間原則上不限時間；廟務、活動與設施使用請以現場公告為準。',
   openingHoursSpecification: [
     {

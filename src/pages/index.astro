@@ -3,24 +3,35 @@ export const prerender = true;
 
 import FaqList from '@/components/FaqList.astro';
 import Gallery from '@/components/Gallery.astro';
+import HistoryLegend from '@/components/HistoryLegend.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import MapEmbed from '@/components/MapEmbed.astro';
+import ReviewsSection from '@/components/ReviewsSection.astro';
+import RoutePlans from '@/components/RoutePlans.astro';
+import SeasonalTable from '@/components/SeasonalTable.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
+import ServicesGrid from '@/components/ServicesGrid.astro';
+import SourcesSection from '@/components/SourcesSection.astro';
+import WeatherWidget from '@/components/WeatherWidget.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { essentials, highlights, siteInfo } from '@/data/site';
-import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
+import { essentials, highlights, nearbyAttractions, siteInfo } from '@/data/site';
+import { buildBreadcrumbSchema, buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
 ---
-<BaseLayout title={`${siteInfo.fullName}｜九龍柱與客雅溪畔散步指南`} description={siteInfo.description}>
+<BaseLayout
+  title={`天公壇公園（${siteInfo.city}）｜免費景點・交通停車・九龍柱夜景與參拜指南`}
+  description="新竹免費景點天公壇公園，緊鄰新竹天公壇，有九龍柱、吊橋與客雅溪綠地。看開放時間、交通路線、停車建議、周邊美食與參拜資訊，規劃半日慢遊。"
+>
   <Fragment slot="jsonld">
     <JsonLd data={buildPlaceSchema(Astro.site)} />
     <JsonLd data={buildFaqSchema()} />
+    <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }], Astro.site)} />
   </Fragment>
 
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
         <span class="eyebrow">新竹北區 · 客雅溪畔</span>
-        <h1>{siteInfo.name}</h1>
+        <h1>天公壇公園（{siteInfo.city}）</h1>
         <p>{siteInfo.description}</p>
         <div class="hero-actions">
           <a class="btn primary" href="/guide/">查看遊園指南</a>
@@ -29,7 +40,12 @@ import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
       </div>
       <div class="hero-media">
         <div class="photo-frame">
-          <img src="/images/tiangongtan-night-pillar.jpg" alt="天公壇公園九龍柱夜景" loading="eager" decoding="async" />
+          <img
+            src="/images/tiangongtan-night-pillar.jpg"
+            alt="天公壇公園（新竹市）九龍柱夜景主視覺"
+            loading="eager"
+            decoding="async"
+          />
         </div>
         <div class="floating-note">
           <strong>最推薦：傍晚到夜間</strong>
@@ -41,7 +57,38 @@ import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
 
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow="特色亮點" title="一座把信仰、溪畔與城市休憩放在一起的公園" text="天公壇公園不是大型觀光景區，而是很適合在新竹市區慢慢走、拍一張地標照、帶孩子放風的舒服停靠點。" />
+      <SectionHeading
+        eyebrow="關於景點"
+        title="關於天公壇公園"
+        text="認識天公壇公園的地理歸屬、與新竹天公壇的關係，以及它在新竹市區的位置。"
+      />
+      <div class="card about-card">
+        <p>
+          歡迎來到<strong>天公壇公園</strong>，也就是在地與遊客口中的<strong>天公壇（tiangongtan）</strong>。它位於<strong
+            >新竹市北區</strong
+          >，緊鄰以玉皇大帝為主祀的<strong>新竹天公壇</strong>，是結合信仰地景、九龍柱、吊橋與客雅溪綠廊的開放式城市公園。
+        </p>
+        <nav class="breadcrumb" aria-label="地理歸屬層級">
+          <span>天公壇公園</span><span class="sep" aria-hidden="true">→</span>
+          <span>{siteInfo.city}</span><span class="sep" aria-hidden="true">→</span>
+          <span>{siteInfo.region}</span>
+        </nav>
+        <p>
+          當你造訪天公壇公園時，也能輕鬆串連周邊的歷史地標與景點，包含<strong
+            >{siteInfo.nearbyLandmark1}</strong
+          >與<strong>{siteInfo.nearbyLandmark2}</strong>，很適合安排成新竹市區半日慢遊。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="特色亮點"
+        title="一座把信仰、溪畔與城市休憩放在一起的公園"
+        text="天公壇公園不是大型觀光景區，而是很適合在新竹市區慢慢走、拍一張地標照、帶孩子放風的舒服停靠點。"
+      />
       <div class="grid-4">
         {highlights.map((item) => (
           <article class="card">
@@ -53,6 +100,10 @@ import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
       </div>
     </div>
   </section>
+
+  <WeatherWidget />
+
+  <ReviewsSection />
 
   <section class="section">
     <div class="container">
@@ -70,11 +121,21 @@ import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
   <section class="section">
     <div class="container split-panel">
       <div>
-        <SectionHeading eyebrow="地圖定位" title="地圖與現場位置" text="公園位於新竹天公壇旁，從市區老街、美食圈與新竹車站都能安排成一段短程移動。" />
+        <SectionHeading
+          eyebrow="地圖定位"
+          title={`位置與怎麼前往天公壇公園（${siteInfo.city}）`}
+          text="公園位於新竹天公壇旁，從市區老街、美食圈與新竹車站都能安排成一段短程移動。"
+        />
         <article class="card dark">
           <h3>地址</h3>
           <p>{siteInfo.address}</p>
         </article>
+        <p class="gov-link">
+          新竹市官方旅遊資訊：
+          <a href={siteInfo.govTourismUrl} target="_blank" rel="noopener noreferrer"
+            >新竹市觀光旅遊網 ↗</a
+          >
+        </p>
       </div>
       <MapEmbed />
     </div>
@@ -82,7 +143,40 @@ import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
 
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow="現場影像" title="從照片先看公園氣氛" text="從九龍柱的晝夜光線，到廟宇屋脊、入口廣場與溪畔綠地，先找出最想親自走到的畫面。" />
+      <SectionHeading
+        eyebrow="周邊順遊"
+        title="天公壇公園周邊地標與景點"
+        text="公園最大的優勢是靠近新竹市區，可把廟宇、老街、小吃與溪畔綠地一次串起來。"
+      />
+      <div class="grid-3">
+        {nearbyAttractions.slice(0, 3).map((item) => (
+          <article class="card">
+            <h3>{item.name}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+      <div class="button-row">
+        <a class="btn" href="/guide/">看完整遊園指南</a>
+      </div>
+    </div>
+  </section>
+
+  <SeasonalTable />
+
+  <RoutePlans />
+
+  <ServicesGrid />
+
+  <HistoryLegend />
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="現場影像"
+        title="從照片先看公園氣氛"
+        text="從九龍柱的晝夜光線，到廟宇屋脊、入口廣場與溪畔綠地，先找出最想親自走到的畫面。"
+      />
       <Gallery limit={5} />
       <div class="button-row">
         <a class="btn" href="/gallery/">看完整照片牆</a>
@@ -92,8 +186,14 @@ import { buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
 
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow="行前解答" title="常見問答" text="門票、停留時間、交通與親子友善重點，一次先看懂。" />
+      <SectionHeading
+        eyebrow="行前解答"
+        title="常見問答"
+        text="門票、停留時間、交通與親子友善重點，一次先看懂。"
+      />
       <FaqList />
     </div>
   </section>
+
+  <SourcesSection />
 </BaseLayout>

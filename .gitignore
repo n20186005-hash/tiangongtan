@@ -1,6 +1,30 @@
-node_modules
-dist
-.astro
-.wrangler
-.DS_Store
+# ===== 依賴與建置產物（不需上傳） =====
+node_modules/
+.pnpm-store/
+dist/
+.astro/
+.wrangler/
+
+# ===== 日誌 =====
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===== 環境變數與密鑰（切勿上傳） =====
 .env
+.env.*
+!.env.example
+
+# ===== 編輯器 / 系統 / 快取 =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.local
+.cache/
+
+# ===== 本地臨時檔案 =====
+tmp/
+temp/

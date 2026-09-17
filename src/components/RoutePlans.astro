@@ -1,0 +1,74 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+
+const groups = [
+  {
+    icon: '親',
+    title: '親子家庭',
+    text: '以草地、兒童遊戲區與九龍柱廣場為主，節奏放慢、多休息；避開正午高溫與溪畔、橋面邊緣，並看顧好孩子與隨身物品。'
+  },
+  {
+    icon: '攝',
+    title: '攝影自然',
+    text: '傍晚至夜間拍九龍柱點燈與廟宇屋脊線條，白天補拍石雕細節；雨天可備透明傘創造光影層次，注意器材防潮。'
+  },
+  {
+    icon: '無',
+    title: '低體力無障礙',
+    text: '走主要平面步道與較友善的廁所動線，減少橋面與階梯；可結合廟埕遮蔭與座椅休息，不必勉強走完全程。'
+  }
+];
+
+const general = [
+  {
+    title: '半日路線（約 2–3 小時）',
+    steps: ['廟埕與廣場', '九龍柱地標', '吊橋與客雅溪綠廊', '順遊城隍廟小吃圈用餐']
+  },
+  {
+    title: '全日路線（約 5–6 小時）',
+    steps: [
+      '上午抵達公園與九龍柱',
+      '市區小吃午餐',
+      '北門大街老街散步',
+      '西雅公園接客雅溪綠廊',
+      '傍晚回到公園看九龍柱點燈'
+    ]
+  }
+];
+---
+<section class="section" id="routes">
+  <div class="container">
+    <SectionHeading
+      eyebrow="遊覽方案"
+      title="按人群定制的遊覽方案"
+      text="依出行組成與體力節奏，挑選最適合的走法；下方另附半日與全日兩條通用路線。"
+    />
+    <div class="grid-3">
+      {groups.map((item) => (
+        <article class="card">
+          <span class="icon-badge">{item.icon}</span>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+
+    <SectionHeading
+      eyebrow="通用路線"
+      title="推薦通用遊覽路線"
+      text="不論幾人同行，都能依時間多寡套用以下兩條路線。"
+    />
+    <div class="grid-2">
+      {general.map((route) => (
+        <article class="card route-card">
+          <h3>{route.title}</h3>
+          <ol class="route-steps">
+            {route.steps.map((step) => (
+              <li>{step}</li>
+            ))}
+          </ol>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

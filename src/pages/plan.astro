@@ -4,8 +4,13 @@ export const prerender = true;
 import ItineraryPlanner from '@/components/ItineraryPlanner.astro';
 import MemorialCard from '@/components/MemorialCard.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { buildBreadcrumbSchema } from '@/lib/schema';
 ---
-<BaseLayout title="行程清單與景點紀念卡" description="使用 localStorage 收藏天公壇公園想去的點，並用 Canvas 在本機合成景點紀念卡。">
+<BaseLayout title="天公壇公園行程規劃與紀念卡｜新竹半日遊工具" description="用本地行程清單收藏天公壇公園想去的點，再用 Canvas 合成專屬景點紀念卡；適合規劃新竹市區半日遊。">
+  <Fragment slot="jsonld">
+    <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }, { name: '行程工具', url: '/plan/' }], Astro.site)} />
+  </Fragment>
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">我的旅程</span>

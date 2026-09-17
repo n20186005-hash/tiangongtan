@@ -4,8 +4,13 @@ export const prerender = true;
 import Gallery from '@/components/Gallery.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import JsonLd from '@/components/JsonLd.astro';
+import { buildBreadcrumbSchema } from '@/lib/schema';
 ---
-<BaseLayout title="照片牆" description="天公壇公園九龍柱、廟宇外觀、入口、廣場與溪畔綠地照片牆。">
+<BaseLayout title="天公壇公園照片牆｜九龍柱夜景、吊橋與廟宇影像" description="天公壇公園照片集：九龍柱夜景、吊橋、客雅溪綠地與新竹天公壇廟宇細節，先看氛圍再決定怎麼排行程。">
+  <Fragment slot="jsonld">
+    <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }, { name: '照片牆', url: '/gallery/' }], Astro.site)} />
+  </Fragment>
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">影像散步</span>

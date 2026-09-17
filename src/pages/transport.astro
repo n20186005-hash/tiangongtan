@@ -5,13 +5,75 @@ import MapEmbed from '@/components/MapEmbed.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { siteInfo, trafficRoutes } from '@/data/site';
+import JsonLd from '@/components/JsonLd.astro';
+import { buildBreadcrumbSchema } from '@/lib/schema';
+
+const arrivals = [
+  {
+    title: '從機場怎麼到',
+    steps: [
+      '最近的國際機場為桃園國際機場；抵達後可搭接駛至新竹的客運或機場聯外運輸，再轉入新竹市區。',
+      '若行李較多或同行者多，可直接搭乘排班計程車或叫車服務前往新竹市區，再短程移動到公園。',
+      '抵達新竹市區（高鐵新竹站、台鐵新竹站或市區轉運站）後，依下方大眾運輸或計程車方式前往即可。'
+    ]
+  },
+  {
+    title: '大眾運輸怎麼到',
+    steps: [
+      '搭乘高鐵者：於高鐵新竹站下車後，轉乘台鐵六家線至新竹站，或搭接駛公車／計程車進入市區。',
+      '搭乘台鐵者：於台鐵新竹站下車，沿市區道路步行約 15–20 分鐘可抵達；帶長輩或小孩可改搭短程計程車。',
+      '市區移動：可善用市區公車路線與公共自行車（YouBike）系統，串接車站、老街與公園周邊。'
+    ]
+  },
+  {
+    title: '計程車 / 叫車怎麼到',
+    steps: [
+      '車站與機場設有排班計程車；也可使用各式叫車平台，輸入「新竹天公壇」或園區地址作為目的地。',
+      '從新竹車站出發屬短程車程，適合行李多、陪同長輩小孩或天候不佳時使用。',
+      '下車點建議設在中山路一側或廟埕附近，再步行進入公園與九龍柱廣場。'
+    ]
+  },
+  {
+    title: '自駕怎麼到',
+    steps: [
+      '可由國道一號（中山高）新竹系統交流道，或國道三號（福高）茄苳交流道進入市區。',
+      '沿中山路周邊道路接抵園區；周邊以路邊停車格與公共停車場類型為主，無大型專屬停車場。',
+      '假日、廟會與活動日車流較多，建議提早出發或改搭大眾運輸。'
+    ]
+  }
+];
 ---
-<BaseLayout title="詳細交通與停車" description="前往新竹天公壇公園的台鐵、高鐵、開車、停車與市區動線建議。">
+<BaseLayout title="天公壇公園交通與停車｜台鐵、高鐵、自駕路線與停車建議" description="前往新竹天公壇公園怎麼走？台鐵步行、高鐵轉乘、自駕與叫車路線一次看，並附周邊停車格、廟會假日停車提醒與地圖導航。">
+  <Fragment slot="jsonld">
+    <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }, { name: '交通停車', url: '/transport/' }], Astro.site)} />
+  </Fragment>
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">抵達方式</span>
       <h1>詳細交通與停車</h1>
-      <p>天公壇公園位在新竹市區，適合用台鐵步行、短程計程車或開車前往；假日與廟會期間建議保留停車緩衝。</p>
+      <p>天公壇公園位在新竹市區，適合用台鐵步行、短程計程車或開車前往；以下從機場、大眾運輸、叫車到自駕逐一說明，並附停車提醒。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="怎麼到最順"
+        title="四種抵達方式詳解"
+        text="依你的出發點與同行組成，選最適合的抵達方式；不論哪一種，最後都能在市區短程接駁到公園。"
+      />
+      <div class="grid-2">
+        {arrivals.map((item) => (
+          <article class="card route-card">
+            <h3>{item.title}</h3>
+            <ol class="route-steps">
+              {item.steps.map((step) => (
+                <li>{step}</li>
+              ))}
+            </ol>
+          </article>
+        ))}
+      </div>
     </div>
   </section>
 

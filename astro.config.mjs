@@ -3,7 +3,7 @@ import cloudflare from '@astrojs/cloudflare';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-const configuredSite = '';
+const configuredSite = 'https://tiangongtan.com';
 const site = configuredSite.trim();
 
 export default defineConfig({

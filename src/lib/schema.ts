@@ -12,20 +12,25 @@ function compactObject<T extends JsonLdRecord>(value: T): T {
 export function buildPlaceSchema(site: URL | undefined): JsonLdRecord {
   const url = absoluteUrl('/', site);
   const image = absoluteAsset(siteInfo.ogImage, site);
+  const mapsShareUrl = siteInfo.mapsShareUrl;
+  const govTourismUrl = siteInfo.govTourismUrl;
+
   const address = {
     '@type': 'PostalAddress',
-    streetAddress: '中山路431巷36號',
+    streetAddress: siteInfo.address,
     addressLocality: siteInfo.city,
     addressRegion: siteInfo.district,
+    postalCode: siteInfo.postalCode,
     addressCountry: 'TW'
   };
 
   const base = {
+    '@id': url ? `${url}#attraction` : undefined,
     name: siteInfo.fullName,
-    alternateName: siteInfo.templeName,
+    alternateName: [siteInfo.name, `${siteInfo.city} ${siteInfo.fullName}`],
     description: siteInfo.description,
     url,
-    image,
+    image: image ? [image] : undefined,
     telephone: siteInfo.phone,
     address,
     geo: {
@@ -33,12 +38,10 @@ export function buildPlaceSchema(site: URL | undefined): JsonLdRecord {
       latitude: siteInfo.latitude,
       longitude: siteInfo.longitude
     },
+    hasMap: mapsShareUrl,
+    sameAs: [mapsShareUrl, govTourismUrl].filter((value): value is string => Boolean(value)),
+    isAccessibleForFree: true,
     openingHoursSpecification: siteInfo.openingHoursSpecification,
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: siteInfo.ratingValue,
-      bestRating: siteInfo.bestRating
-    },
     priceRange: siteInfo.priceRange
   };
 
@@ -69,6 +72,22 @@ export function buildFaqSchema(): JsonLdRecord {
         '@type': 'Answer',
         text: item.answer
       }
+    }))
+  };
+}
+
+export function buildBreadcrumbSchema(
+  trail: { name: string; url: string }[],
+  site: URL | undefined
+): JsonLdRecord {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: trail.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: absoluteUrl(item.url, site)
     }))
   };
 }

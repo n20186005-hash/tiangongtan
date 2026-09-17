@@ -1,0 +1,40 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+import { siteInfo } from '@/data/site';
+
+const blocks = [
+  {
+    title: '歷史背景',
+    text: `${siteInfo.name}的發展與${siteInfo.templeName}密不可分。天公壇是本地重要的信仰中心，主祀玉皇大帝（民間尊稱「天公」），長年香火與廟會活動凝聚了地方的生活節奏；公園則在廟埕旁逐漸發展為開放綠地，把信仰地景、九龍柱、吊橋與客雅溪綠廊串成一處可散步、可停留的城市空間。`
+  },
+  {
+    title: '民間節慶與故事',
+    text: '農曆正月初九是玉皇大帝聖誕（習稱「天公生」），是本地最重要的年度慶典之一，廟方通常會舉辦祭祀與祈福活動，吸引不少信眾與遊客。這類信仰故事屬於民間文化的一部分，我們以科普角度介紹其由來與氛圍，不對靈驗與超自然現象做任何斷言。'
+  },
+  {
+    title: '建築與環境科普',
+    text: '九龍柱以「九」這個陽數之極與「龍」的祥瑞意象作為裝飾主題，是公園最醒目的地標；客雅溪綠廊則是都市水岸生態的一部分，沿岸綠帶為城市提供遮蔭、降溫與短暫棲地。認識這些元素，能讓散步多一層看點。'
+  },
+  {
+    title: '訪客責任',
+    text: '請尊重廟宇的祭祀動線與信眾活動，保持安靜與禮貌；垃圾不落地、愛護草地與公共設施；夜間留意照明與溪畔安全；攜帶寵物請繫繩並清理；攝影時避免干擾宗教儀式。讓這處開放空間能長久地被所有人舒服地使用。'
+  }
+];
+---
+<section class="section" id="about-park">
+  <div class="container">
+    <SectionHeading
+      eyebrow="科普與責任"
+      title="天公壇公園的歷史、故事與訪客責任"
+      text="從信仰背景到環境科普，再用負責任的方式使用這片公共空間。"
+    />
+    <div class="prose-grid">
+      {blocks.map((block) => (
+        <article class="card prose-card">
+          <h3>{block.title}</h3>
+          <p>{block.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

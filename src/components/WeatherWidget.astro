@@ -1,0 +1,247 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+---
+<section class="section" id="weather">
+  <div class="container">
+    <SectionHeading
+      eyebrow="即時天氣"
+      title="天公壇公園天氣與出遊建議"
+      text="依景點座標取得的即時氣溫、降雨機率、風力與紫外線，自動整理成今天能不能出門、該帶什麼的建議。"
+    />
+    <div class="weather-card" data-weather>
+      <div class="weather-now" data-weather-now>
+        <span class="weather-loading">天氣資料載入中…</span>
+      </div>
+      <div class="weather-advice" data-weather-advice hidden></div>
+      <ul class="weather-days" data-weather-days aria-label="未來多日預報"></ul>
+      <p class="weather-note" data-weather-note></p>
+    </div>
+  </div>
+</section>
+
+<script>
+  const WEEKDAYS = ['日', '一', '二', '三', '四', '五', '六'];
+
+  function round(n: number): string {
+    return typeof n === 'number' ? String(Math.round(n)) : '-';
+  }
+
+  function beaufort(ms: number): number {
+    if (ms < 0.3) return 0;
+    if (ms < 1.6) return 1;
+    if (ms < 3.4) return 2;
+    if (ms < 5.5) return 3;
+    if (ms < 8.0) return 4;
+    if (ms < 10.8) return 5;
+    if (ms < 13.9) return 6;
+    if (ms < 17.2) return 7;
+    if (ms < 20.8) return 8;
+    if (ms < 24.5) return 9;
+    if (ms < 28.5) return 10;
+    if (ms < 32.7) return 11;
+    return 12;
+  }
+
+  function windWord(level: number): string {
+    return ['無風', '軟風', '輕風', '微風', '和風', '清勁風', '強風', '疾風', '大風', '烈風', '狂風', '暴風', '颶風'][level] ?? '';
+  }
+
+  function uvWord(uv: number): string {
+    if (uv < 3) return '低';
+    if (uv < 6) return '中等';
+    if (uv < 8) return '高';
+    if (uv < 11) return '很高';
+    return '極高';
+  }
+
+  function humidityWord(h: number): string {
+    if (typeof h !== 'number') return '-';
+    if (h >= 80) return '潮濕';
+    if (h >= 60) return '舒適';
+    return '偏乾';
+  }
+
+  function buildAdvice(d: any) {
+    const code = d.current.code;
+    const today = d.days[0] ?? {};
+    const tmax = typeof today.tmax === 'number' ? today.tmax : d.current.temp;
+    const tmin = typeof today.tmin === 'number' ? today.tmin : d.current.temp;
+    const wind = beaufort(d.current.wind);
+    const uv = typeof d.current.uv === 'number' ? d.current.uv : (today.uvMax ?? 0);
+    const pop = typeof d.popToday === 'number' ? d.popToday : 0;
+
+    const outfit: string[] = [];
+    const play: string[] = [];
+    const items: string[] = [];
+    const risk: string[] = [];
+
+    if (pop >= 60) {
+      outfit.push('降雨機率偏高，盡量攜帶雨具');
+      play.push('優先選擇室內場館，戶外行程建議斟酌延後');
+      items.push('雨傘 / 雨衣');
+    }
+    if ([51, 53, 55, 56, 57].includes(code)) {
+      outfit.push('有小雨，路面濕滑，走路注意防滑');
+      play.push('露天項目體驗較差');
+      items.push('摺疊傘');
+    }
+    if ([61, 63, 80, 81].includes(code)) {
+      play.push('戶外遊玩體驗受影響，可改往室內景點');
+      items.push('雨傘 / 雨衣');
+    }
+    if ([65, 82].includes(code)) {
+      risk.push('降雨較強，避開低窪與溪畔地帶');
+      play.push('不建議長時間戶外，部分設施可能關閉');
+      items.push('雨衣（風大時不建議長柄傘）');
+    }
+    if ([95, 96, 99].includes(code)) {
+      risk.push('謹防雷電，勿於高處、水邊或樹下停留');
+      play.push('水上與高處設施可能關閉');
+    }
+    if (tmax >= 32) {
+      outfit.push('氣溫較高，建議輕薄透氣衣物');
+      play.push('盡量避開正午外出，縮短戶外時間');
+      items.push('防曬用品', '充足飲用水', '防暑用品');
+    }
+    if (uv >= 5) {
+      outfit.push('紫外線較強，注意防曬');
+      items.push('防曬霜', '墨鏡', '遮陽帽');
+    }
+    if (tmax - tmin > 8) {
+      outfit.push('晝夜溫差大，備一件外套方便增減');
+    }
+    if (tmax <= 10) {
+      outfit.push('氣溫偏低，做好防寒');
+      items.push('厚外套', '圍巾');
+    }
+    if (wind >= 5 && wind <= 6) {
+      outfit.push('風力偏大');
+      play.push('溪畔與部分露天設施可能受影響');
+      items.push('帽子易吹落，建議固定或加帽繩');
+    }
+    if (wind >= 7) {
+      risk.push('大風天氣，遠離廣場邊緣、廣告物與溪畔');
+      play.push('戶外設施可能關閉');
+    }
+    if ([0, 1].includes(code)) {
+      outfit.push('天氣晴好，適合戶外遊覽');
+      play.push('適合拍照與長時間戶外慢走');
+      items.push('記得防曬');
+    }
+    if ([2, 3].includes(code)) {
+      outfit.push('光線柔和，很適合拍照');
+      play.push('無強烈日曬，適合長時間戶外逛遊');
+    }
+    if ([45, 48].includes(code)) {
+      risk.push('能見度差，步行請注意安全');
+      play.push('不適合遠景觀賞');
+    }
+
+    return { outfit, play, items, risk };
+  }
+
+  function formatTime(iso: string): string {
+    try {
+      return new Date(iso).toLocaleString('zh-Hant-TW', {
+        month: 'numeric',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    } catch {
+      return '';
+    }
+  }
+
+  function renderAdvice(el: HTMLElement, advice: any) {
+    const blocks = [
+      { title: '出行穿搭', icon: '✅', items: advice.outfit, chips: false },
+      { title: '遊玩安排', icon: '✅', items: advice.play, chips: false },
+      { title: '隨身物品', icon: '🎒', items: advice.items, chips: true }
+    ];
+
+    let html = '';
+    if (advice.risk.length) {
+      html += `<div class="advice-block risk"><div class="advice-head">⚠️ 風險提醒</div><ul>${advice.risk
+        .map((r: string) => `<li>${r}</li>`)
+        .join('')}</ul></div>`;
+    }
+    for (const b of blocks) {
+      if (!b.items.length) continue;
+      html += `<div class="advice-block"><div class="advice-head">${b.icon} ${b.title}</div>`;
+      if (b.chips) {
+        const uniq = Array.from(new Set(b.items));
+        html += `<div class="chip-row">${uniq
+          .map((i: string) => `<span class="chip">${i}</span>`)
+          .join('')}</div>`;
+      } else {
+        html += `<ul>${b.items.map((i: string) => `<li>${i}</li>`).join('')}</ul>`;
+      }
+      html += `</div>`;
+    }
+    el.innerHTML = html;
+    el.hidden = false;
+  }
+
+  async function loadWeather() {
+    const root = document.querySelector<HTMLElement>('[data-weather]');
+    if (!root) return;
+    const nowEl = root.querySelector<HTMLElement>('[data-weather-now]');
+    const adviceEl = root.querySelector<HTMLElement>('[data-weather-advice]');
+    const daysEl = root.querySelector<HTMLElement>('[data-weather-days]');
+    const noteEl = root.querySelector<HTMLElement>('[data-weather-note]');
+    if (!nowEl || !adviceEl || !daysEl || !noteEl) return;
+
+    try {
+      const res = await fetch('/api/weather');
+      if (!res.ok) throw new Error('bad');
+      const data = await res.json();
+      if (data.error) throw new Error('err');
+
+      const c = data.current;
+      const today = data.days[0] ?? {};
+      const wind = beaufort(c.wind);
+      const uv = typeof c.uv === 'number' ? c.uv : (today.uvMax ?? 0);
+      const pop = typeof data.popToday === 'number' ? data.popToday : 0;
+
+      nowEl.innerHTML = `
+        <div class="weather-temp">
+          <span class="weather-icon" aria-hidden="true">${c.icon}</span>
+          <strong>${round(c.temp)}°</strong>
+          <span class="weather-label">${c.label}</span>
+        </div>
+        <div class="weather-meta">
+          <span>體感 ${round(c.feels)}°</span>
+          <span>濕度 ${humidityWord(c.humidity)}</span>
+          <span>風 ${wind} 級（${windWord(wind)}）</span>
+          <span>紫外線 ${uvWord(uv)}</span>
+          <span>降雨機率 ${pop}%</span>
+        </div>`;
+
+      renderAdvice(adviceEl, buildAdvice(data));
+      window.dispatchEvent(new CustomEvent('weather:loaded', { detail: data }));
+
+      daysEl.innerHTML = data.days
+        .slice(0, 7)
+        .map((d: any, i: number) => {
+          const dt = new Date(d.date + 'T00:00:00');
+          const label = i === 0 ? '今天' : `週${WEEKDAYS[dt.getDay()]}`;
+          return `<li>
+            <span class="wd-day">${label}</span>
+            <span class="wd-icon" aria-hidden="true">${d.icon}</span>
+            <span class="wd-label">${d.label}</span>
+            <span class="wd-temp">${round(d.tmin)}–${round(d.tmax)}°</span>
+            <span class="wd-pop">雨 ${typeof d.pop === 'number' ? d.pop : '-'}%</span>
+          </li>`;
+        })
+        .join('');
+
+      noteEl.textContent = `資料更新：${formatTime(data.updatedAt)}`;
+    } catch {
+      nowEl.innerHTML =
+        '<span class="weather-loading">天氣資料暫時無法取得，請稍後再試。</span>';
+    }
+  }
+
+  loadWeather();
+</script>

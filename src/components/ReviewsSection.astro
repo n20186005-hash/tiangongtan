@@ -1,0 +1,40 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+import { siteInfo } from '@/data/site';
+---
+<section class="section" id="reviews">
+  <div class="container">
+    <SectionHeading
+      eyebrow="用戶評價"
+      title="天公壇公園的 Google 評價與評分"
+      text="以下評分與評價數同步自谷歌地圖（Google Maps）用戶評價，僅供參考，實際以谷歌地圖現場資訊為準。"
+    />
+    <div class="review-card">
+      <p class="review-source-label">
+        評價來自谷歌地圖用戶評價　<a
+          href={siteInfo.mapsShareUrl}
+          target="_blank"
+          rel="noopener noreferrer">點擊查看谷歌地圖全部評價</a
+        >：
+      </p>
+      <div class="review-score">
+        <span class="review-rating">{siteInfo.ratingValue}</span>
+        <span class="review-stars" aria-hidden="true">★★★★★</span>
+        <span class="review-count">{siteInfo.ratingCount.toLocaleString('en-US')} 則評價</span>
+        <span class="review-platform">Google 地圖</span>
+      </div>
+      <p class="review-sync-line">
+        評分與評價數同步自谷歌地圖（Google Maps）用戶評價 · {siteInfo.syncDate} ·
+        <a href={siteInfo.mapsShareUrl} target="_blank" rel="noopener noreferrer"
+          >點擊查看谷歌地圖全部評價↗</a
+        >
+      </p>
+      <p class="review-copyright">
+        同步自 Google 地圖用戶評價，同步時間 {siteInfo.syncDate}；版權歸原作者與 Google 地圖所有
+      </p>
+      <a class="btn primary" href={siteInfo.mapsShareUrl} target="_blank" rel="noopener noreferrer"
+        >在谷歌地圖查看全部評價</a
+      >
+    </div>
+  </div>
+</section>

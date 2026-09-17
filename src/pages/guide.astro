@@ -2,10 +2,17 @@
 export const prerender = true;
 
 import SectionHeading from '@/components/SectionHeading.astro';
+import RoutePlans from '@/components/RoutePlans.astro';
+import ServicesGrid from '@/components/ServicesGrid.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { essentials, foodAreas, nearbyAttractions } from '@/data/site';
+import JsonLd from '@/components/JsonLd.astro';
+import { buildBreadcrumbSchema } from '@/lib/schema';
 ---
-<BaseLayout title="遊園指南" description="天公壇公園門票費用、最佳時段、建議停留、周邊美食與周邊景點整理。">
+<BaseLayout title="天公壇公園遊園指南｜門票、停留時間、最佳時段與周邊美食" description="天公壇公園要門票嗎？建議停留多久？最佳拍照時段？整理門票費用、親子與攝影建議、周邊美食與順遊景點，一次看懂怎麼玩。">
+  <Fragment slot="jsonld">
+    <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }, { name: '遊園指南', url: '/guide/' }], Astro.site)} />
+  </Fragment>
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">遊園提案</span>
@@ -75,4 +82,8 @@ import { essentials, foodAreas, nearbyAttractions } from '@/data/site';
       </div>
     </div>
   </section>
+
+  <RoutePlans />
+
+  <ServicesGrid />
 </BaseLayout>

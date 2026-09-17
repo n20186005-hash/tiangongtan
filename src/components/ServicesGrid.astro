@@ -1,0 +1,64 @@
+---
+import SectionHeading from '@/components/SectionHeading.astro';
+
+const services = [
+  {
+    icon: '廁',
+    title: '公共廁所',
+    text: '園區與鄰近廟埕設有公共廁所；例假日、廟會與活動日人潮較多，建議預留排隊與等候時間。'
+  },
+  {
+    icon: '停',
+    title: '停車',
+    text: '周邊以路邊停車格與公共停車場類型為主，園區無大型專屬停車場；假日與活動日較易滿位，可考慮大眾運輸前往。'
+  },
+  {
+    icon: '食',
+    title: '餐飲',
+    text: '步行範圍內有便利商店、傳統小吃店與市區餐飲類型；想更豐富可前往城隍廟小吃圈與北門大街一帶。'
+  },
+  {
+    icon: '宿',
+    title: '住宿',
+    text: '新竹市區有旅館、飯店與民宿等多種類型，可依預算與交通安排；住在市區前往本園與各大景點都算便利。'
+  },
+  {
+    icon: '購',
+    title: '商超補給',
+    text: '附近有便利商店與超市類型，可補給飲用水、零食與日常用品；夏季與午後雷陣雨季特別建議先備好飲水。'
+  },
+  {
+    icon: '油',
+    title: '加油與充電',
+    text: '周邊有加油站與公共電動車充電樁類型；自駕者可於抵達前規劃補給，避免回程臨時找點。'
+  },
+  {
+    icon: '醫',
+    title: '醫療',
+    text: '市區內有診所、藥局與醫院等類型；若出現不適或意外，緊急狀況請撥打 119。'
+  },
+  {
+    icon: '無',
+    title: '無障礙',
+    text: '園區以平面與步道為主，主要動線與部分廁所較友善；輪椅與推車建議走主步道，並避開橋面與溪畔邊緣。'
+  }
+];
+---
+<section class="section" id="services">
+  <div class="container">
+    <SectionHeading
+      eyebrow="訪客服務"
+      title="訪客服務與周邊設施"
+      text="以下以「類型」方式說明園區與周邊常見設施，不指定特定商家，便於你依自身需求自行選擇。"
+    />
+    <div class="services-grid">
+      {services.map((item) => (
+        <article class="card service-card">
+          <span class="icon-badge">{item.icon}</span>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

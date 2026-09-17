@@ -4,11 +4,12 @@ export const prerender = true;
 import FaqList from '@/components/FaqList.astro';
 import JsonLd from '@/components/JsonLd.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { buildFaqSchema } from '@/lib/schema';
+import { buildBreadcrumbSchema, buildFaqSchema } from '@/lib/schema';
 ---
-<BaseLayout title="FAQ 常見問答" description="天公壇公園門票、交通、停車、親子、最佳時間與建議停留常見問答。">
+<BaseLayout title="天公壇公園常見問題 FAQ｜門票、交通、停車、親子與參拜" description="天公壇公園需要門票嗎？停車方便嗎？適合帶小孩嗎？整理第一次到訪最常問的門票、交通、停車、親子與最佳時間解答。">
   <Fragment slot="jsonld">
     <JsonLd data={buildFaqSchema()} />
+    <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }, { name: 'FAQ', url: '/faq/' }], Astro.site)} />
   </Fragment>
   <section class="page-hero">
     <div class="container">
