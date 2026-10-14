@@ -1,5 +1,5 @@
 ---
-import { navItems, siteInfo } from '@/data/site';
+import { navItems, siteInfo, siteNotice } from '@/data/site';
 import { absoluteAsset, absoluteUrl, withTrailingSlash } from '@/lib/urls';
 import '../styles/global.css';
 
@@ -74,12 +74,29 @@ const ogImage = absoluteAsset(image, Astro.site);
         <div class="container footer-grid">
           <div>
             <strong>{siteInfo.fullName}</strong>
-            <p>{siteInfo.shortDescription}</p>
+            <p>{siteNotice.about}</p>
           </div>
           <div>
             <small>地址：{siteInfo.address}</small>
-            <small>電話：{siteInfo.phone}</small>
+            <small>電話：{siteInfo.phone}（景點場所聯繫電話，非本站客服）</small>
           </div>
+          <div>
+            <small>資料來源：Google 地圖、新竹市觀光旅遊網</small>
+            <small>
+              官方廟方資訊：
+              <a href={siteInfo.officialTempleUrl} target="_blank" rel="noopener noreferrer"
+                >新竹天公壇官方網站 ↗</a
+              >
+            </small>
+            <small>聯絡方式：{siteInfo.contactEmail}</small>
+          </div>
+        </div>
+        <div class="container footer-note">
+          <p>{siteNotice.text}</p>
+          <p>
+            本站所載開放時間、收費與活動資訊為編輯整理內容（核對時間 {siteInfo.syncDate}），實際情形請以現場公告與官方來源為準；
+            {siteNotice.reviewNote}
+          </p>
         </div>
       </footer>
     </div>

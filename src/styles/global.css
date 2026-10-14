@@ -488,6 +488,20 @@ textarea {
   border: 0;
 }
 
+.map-link {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  background: rgba(118, 149, 130, 0.14);
+  font-size: 0.92rem;
+}
+
+.map-link a {
+  color: var(--deep);
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+}
+
 .photo-grid {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
@@ -885,7 +899,7 @@ textarea {
   border-radius: 1.4rem;
   background:
     linear-gradient(135deg, rgba(24, 44, 37, 0.88), rgba(143, 51, 41, 0.34)),
-    url('/images/tiangongtan-night-pillar.jpg') center/cover;
+    url('/images/tiangongtan-nine-dragon-pillar-night.jpg') center/cover;
   padding: 1rem;
 }
 
@@ -928,6 +942,34 @@ textarea {
 
 .about-card strong {
   color: var(--deep);
+}
+
+.plus-code {
+  margin-top: 0.35rem;
+  font-size: 0.85rem;
+  color: rgba(255, 248, 223, 0.78);
+  letter-spacing: 0.03em;
+}
+
+.parking-walk {
+  margin-top: 0.5rem;
+  font-weight: 800;
+  color: var(--deep);
+}
+
+.parking-tip {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.route-card .gov-link {
+  margin-top: 0.6rem;
+  padding: 0;
+  background: none;
+}
+
+.route-card .tag {
+  margin-bottom: 0.5rem;
 }
 
 .gov-link {
@@ -1357,6 +1399,19 @@ textarea {
   display: block;
   color: rgba(255, 248, 223, 0.62);
   line-height: 1.7;
+}
+
+.footer-note {
+  margin-top: 1.6rem;
+  padding-top: 1.2rem;
+  border-top: 1px solid rgba(255, 248, 223, 0.16);
+}
+
+.footer-note p {
+  margin: 0 0 0.4rem;
+  font-size: 0.82rem;
+  line-height: 1.8;
+  color: rgba(255, 248, 223, 0.58);
 }
 
 .page-hero {

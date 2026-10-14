@@ -5,7 +5,7 @@ import SectionHeading from '@/components/SectionHeading.astro';
 import RoutePlans from '@/components/RoutePlans.astro';
 import ServicesGrid from '@/components/ServicesGrid.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { essentials, foodAreas, nearbyAttractions } from '@/data/site';
+import { essentials, foodAreas, nearbyAttractions, rainPlans, walkRoute } from '@/data/site';
 import JsonLd from '@/components/JsonLd.astro';
 import { buildBreadcrumbSchema } from '@/lib/schema';
 ---
@@ -38,7 +38,7 @@ import { buildBreadcrumbSchema } from '@/lib/schema';
   <section class="section">
     <div class="container split-panel">
       <div class="round-image">
-        <img src="/images/tiangongtan-day-pillar.jpg" alt="天公壇公園白天九龍柱" loading="lazy" decoding="async" />
+        <img src="/images/tiangongtan-nine-dragon-pillar-day.jpg" alt="天公壇公園白天九龍柱" loading="lazy" decoding="async" />
       </div>
       <div>
         <SectionHeading eyebrow="散步順序" title="推薦玩法" text="第一次來可用「廟埕—九龍柱—吊橋—溪畔」四段節奏，不需要趕。" />
@@ -47,6 +47,40 @@ import { buildBreadcrumbSchema } from '@/lib/schema';
           <div class="route-item"><span class="route-number">2</span><div><h3>走到九龍柱拍地標照</h3><p>白天看雕刻、傍晚看光線，夜間燈光亮起後更適合做旅遊封面。</p></div></div>
           <div class="route-item"><span class="route-number">3</span><div><h3>接吊橋與客雅溪綠廊</h3><p>把停留延伸到西雅公園方向，適合親子、散步與簡單運動。</p></div></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="節奏安排"
+        title="散步路線與建議時間"
+        text="以「廟埕—九龍柱—吊橋—溪畔」為主線，把每一段抓一個參考時間，就能安排 30 分鐘快走或半日慢遊。以下時間為一般步行速度的參考估計值。"
+      />
+      <div class="grid-2">
+        {walkRoute.map((item, index) => (
+          <article class="card route-card">
+            <span class="tag">{item.minutes}</span>
+            <h3>{index + 1}. {item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="雨天備案"
+        title="下雨天也能安排的新竹市區行程"
+        text="天公壇公園以戶外空間為主，遇到雨天不必取消行程：把室內景點與老街騎樓排進來，等雨勢變小再回到公園。"
+      />
+      <div class="grid-3">
+        {rainPlans.map((item) => (
+          <article class="card"><h3>{item.title}</h3><p>{item.text}</p></article>
+        ))}
       </div>
     </div>
   </section>

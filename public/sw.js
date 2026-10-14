@@ -1,4 +1,4 @@
-const CACHE = 'tiangongtan-v1';
+const CACHE = 'tiangongtan-v2';
 const APP_SHELL = ['/', '/favicon.svg', '/site.webmanifest', '/images/og/tiangongtan-park-og.jpg'];
 
 self.addEventListener('install', (event) => {

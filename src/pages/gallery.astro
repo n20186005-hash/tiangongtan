@@ -4,10 +4,11 @@ export const prerender = true;
 import Gallery from '@/components/Gallery.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { siteInfo, siteNotice } from '@/data/site';
 import JsonLd from '@/components/JsonLd.astro';
 import { buildBreadcrumbSchema } from '@/lib/schema';
 ---
-<BaseLayout title="天公壇公園照片牆｜九龍柱夜景、吊橋與廟宇影像" description="天公壇公園照片集：九龍柱夜景、吊橋、客雅溪綠地與新竹天公壇廟宇細節，先看氛圍再決定怎麼排行程。">
+<BaseLayout title="天公壇公園照片牆｜九龍柱夜景、吊橋與廟宇影像" description="天公壇公園照片集：九龍柱夜景、白天石雕、吊橋、客雅溪綠地與新竹天公壇廟宇細節，每張附圖說與授權說明，先看氛圍再決定怎麼排行程。">
   <Fragment slot="jsonld">
     <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }, { name: '照片牆', url: '/gallery/' }], Astro.site)} />
   </Fragment>
@@ -22,6 +23,10 @@ import { buildBreadcrumbSchema } from '@/lib/schema';
     <div class="container">
       <SectionHeading eyebrow="八景選輯" title="九龍柱、廟埕與溪畔綠意" text="從白天石雕的立體細節、夜間點燈，到廟宇朱紅金飾與公園綠意，依現場視角逐張觀看。" />
       <Gallery />
+      <p class="notice">
+        照片由本站整理，僅供行程規劃參考；{siteNotice.photoCredit}若權利人認為使用不當，請來信
+        <a href={`mailto:${siteInfo.contactEmail}`}>{siteInfo.contactEmail}</a>，我們會立即調整或下架。
+      </p>
     </div>
   </section>
 </BaseLayout>

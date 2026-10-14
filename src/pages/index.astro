@@ -14,12 +14,12 @@ import ServicesGrid from '@/components/ServicesGrid.astro';
 import SourcesSection from '@/components/SourcesSection.astro';
 import WeatherWidget from '@/components/WeatherWidget.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { essentials, highlights, nearbyAttractions, siteInfo } from '@/data/site';
+import { essentials, highlights, nearbyAttractions, siteInfo, siteNotice } from '@/data/site';
 import { buildBreadcrumbSchema, buildFaqSchema, buildPlaceSchema } from '@/lib/schema';
 ---
 <BaseLayout
-  title={`天公壇公園（${siteInfo.city}）｜免費景點・交通停車・九龍柱夜景與參拜指南`}
-  description="新竹免費景點天公壇公園，緊鄰新竹天公壇，有九龍柱、吊橋與客雅溪綠地。看開放時間、交通路線、停車建議、周邊美食與參拜資訊，規劃半日慢遊。"
+  title="天公壇公園｜新竹九龍柱夜景、交通停車與遊園攻略"
+  description="新竹天公壇公園旅遊指南，整理九龍柱夜景、客雅溪吊橋、公園照片、交通停車、免費入園資訊與周邊景點，方便規劃新竹北區散步行程。"
 >
   <Fragment slot="jsonld">
     <JsonLd data={buildPlaceSchema(Astro.site)} />
@@ -41,7 +41,7 @@ import { buildBreadcrumbSchema, buildFaqSchema, buildPlaceSchema } from '@/lib/s
       <div class="hero-media">
         <div class="photo-frame">
           <img
-            src="/images/tiangongtan-night-pillar.jpg"
+            src="/images/tiangongtan-nine-dragon-pillar-night.jpg"
             alt="天公壇公園（新竹市）九龍柱夜景主視覺"
             loading="eager"
             decoding="async"
@@ -67,6 +67,13 @@ import { buildBreadcrumbSchema, buildFaqSchema, buildPlaceSchema } from '@/lib/s
           歡迎來到<strong>天公壇公園</strong>，也就是在地與遊客口中的<strong>天公壇（tiangongtan）</strong>。它位於<strong
             >新竹市北區</strong
           >，緊鄰以玉皇大帝為主祀的<strong>新竹天公壇</strong>，是結合信仰地景、九龍柱、吊橋與客雅溪綠廊的開放式城市公園。
+        </p>
+        <p class="notice">
+          <strong>{siteNotice.title}：</strong>
+          {siteNotice.text}
+          <a href={siteInfo.officialTempleUrl} target="_blank" rel="noopener noreferrer"
+            >{siteNotice.officialTempleLabel} ↗</a
+          >
         </p>
         <nav class="breadcrumb" aria-label="地理歸屬層級">
           <span>天公壇公園</span><span class="sep" aria-hidden="true">→</span>
@@ -129,6 +136,7 @@ import { buildBreadcrumbSchema, buildFaqSchema, buildPlaceSchema } from '@/lib/s
         <article class="card dark">
           <h3>地址</h3>
           <p>{siteInfo.address}</p>
+          <p class="plus-code">Plus Code：{siteInfo.plusCode}</p>
         </article>
         <p class="gov-link">
           新竹市官方旅遊資訊：

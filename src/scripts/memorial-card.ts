@@ -153,7 +153,7 @@ if (root) {
     ctx.fillText('照片僅保存在您的設備', pad + 18, size.height - pad - 26);
   };
 
-  loadImage('/images/tiangongtan-night-pillar.jpg')
+  loadImage('/images/tiangongtan-nine-dragon-pillar-night.jpg')
     .then((image) => {
       activeImage = image;
       render();

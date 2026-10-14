@@ -4,9 +4,45 @@ export const prerender = true;
 import MapEmbed from '@/components/MapEmbed.astro';
 import SectionHeading from '@/components/SectionHeading.astro';
 import BaseLayout from '@/layouts/BaseLayout.astro';
-import { siteInfo, trafficRoutes } from '@/data/site';
+import { parkingGuide, siteInfo, trafficRoutes } from '@/data/site';
 import JsonLd from '@/components/JsonLd.astro';
 import { buildBreadcrumbSchema } from '@/lib/schema';
+
+const stationWalkUrl =
+  'https://www.google.com/maps/dir/?api=1&origin=' +
+  encodeURIComponent('台鐵新竹車站') +
+  '&destination=24.799498,120.957721&travelmode=walking';
+
+const stationWalk = [
+  {
+    title: '從台鐵新竹站前站出發',
+    text: '出站後沿前站商圈道路往西側市區方向前進，先抵達中正路與護城河一帶的鬧區。'
+  },
+  {
+    title: '經過北門大街與城隍廟商圈',
+    text: '這段路也是新竹最熱鬧的老街區，可順路看城隍廟、北門街屋與小吃聚落，邊走邊停。'
+  },
+  {
+    title: '接中山路與 431 巷方向',
+    text: '沿中山路往客雅溪方向前進，看到天公壇廟埕與九龍柱廣場即抵達公園一帶。'
+  }
+];
+
+const parkingTips = [
+  {
+    title: '機車停車',
+    text: '公園周邊巷道路邊與廟埕廣場一帶常見機車停放；廟會、節慶與假日人潮多時車位緊張，請依現場人員與標線指示停放，勿佔用消防通道與巷弄出入口。'
+  },
+  {
+    title: '無障礙與親子',
+    text: '建議優先選擇中正路商圈或北大路一帶的室內收費停車場，避開巷內窄彎與高低差；公園入口到九龍柱廣場以平坦步道為主，可放慢速度多安排休息。'
+  },
+  {
+    title: '雨天與夜間',
+    text: '雨天直接停在室內收費停車場，減少撐傘走巷弄的時間；夜間拍照回程請留意照明、車流與溪畔動線，同行者盡量不單獨行動。'
+  }
+];
+---
 
 const arrivals = [
   {
@@ -43,15 +79,20 @@ const arrivals = [
   }
 ];
 ---
-<BaseLayout title="天公壇公園交通與停車｜台鐵、高鐵、自駕路線與停車建議" description="前往新竹天公壇公園怎麼走？台鐵步行、高鐵轉乘、自駕與叫車路線一次看，並附周邊停車格、廟會假日停車提醒與地圖導航。">
+<BaseLayout
+  title="天公壇公園交通與停車｜新竹車站步行路線、周邊停車場與廟會停車提醒"
+  description="前往新竹天公壇公園怎麼走？台鐵新竹站步行約 15–20 分鐘，附周邊路邊收費格、車站與北大路等公共收費停車場 Google 地圖連結，以及機車、無障礙、雨天與廟會假日的停車提醒。"
+>
   <Fragment slot="jsonld">
     <JsonLd data={buildBreadcrumbSchema([{ name: '天公壇公園', url: '/' }, { name: '交通停車', url: '/transport/' }], Astro.site)} />
   </Fragment>
   <section class="page-hero">
     <div class="container">
       <span class="eyebrow">抵達方式</span>
-      <h1>詳細交通與停車</h1>
-      <p>天公壇公園位在新竹市區，適合用台鐵步行、短程計程車或開車前往；以下從機場、大眾運輸、叫車到自駕逐一說明，並附停車提醒。</p>
+      <h1>天公壇公園交通與停車攻略</h1>
+      <p>
+        天公壇公園位在新竹市區，適合用台鐵步行、短程計程車或開車前往。以下從機場、大眾運輸、叫車到自駕逐一說明，並整理周邊停車場、步行路線與廟會假日的停車提醒。
+      </p>
     </div>
   </section>
 
@@ -99,13 +140,72 @@ const arrivals = [
 
   <section class="section">
     <div class="container">
-      <SectionHeading eyebrow="開車提醒" title="停車資訊" text="公園沒有大型觀光景區式停車場，建議以周邊停車格、鄰近停車空間與步行接駁思維來安排。" />
-      <div class="grid-3">
-        <article class="card dark"><h3>平日</h3><p>通常可先尋找周邊路邊停車格，再步行進入公園與廟埕。</p></article>
-        <article class="card"><h3>假日</h3><p>新竹市區車流較多，若要接城隍廟或北門大街，建議停在市區停車場後步行串遊。</p></article>
-        <article class="card"><h3>活動日</h3><p>遇到廟方活動、節慶或大型人潮時，停車難度會提高，請以現場交通管制與公告為準。</p></article>
+      <SectionHeading
+        eyebrow="步行接駁"
+        title="從新竹車站步行到天公壇公園"
+        text="搭台鐵最方便：出新竹站後沿市區老街步行約 15–20 分鐘可抵達（步行時間為參考估計值），也可導航直接帶你走到公園入口。"
+      />
+      <div class="timeline">
+        {stationWalk.map((item, index) => (
+          <div class="route-item">
+            <span class="route-number">{index + 1}</span>
+            <div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          </div>
+        ))}
       </div>
-      <p class="notice">地點：{siteInfo.address}。夜間拍照請留意同行者、車流與溪畔動線。</p>
+      <p class="gov-link">
+        Google 地圖步行導航（台鐵新竹車站 → 天公壇公園）：
+        <a href={stationWalkUrl} target="_blank" rel="noopener noreferrer">開啟路線規劃 ↗</a>
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="開車必看"
+        title="天公壇公園周邊停車場與停車方式"
+        text="公園沒有大型觀光景區式停車場，開車前來主要使用周邊路邊收費停車格、鄰近公共收費停車場或商場停車場，再步行進入公園。以下各點均附 Google 地圖連結，可直接導航。"
+      />
+      <div class="grid-2">
+        {parkingGuide.map((spot) => (
+          <article class="card route-card">
+            <span class="tag">{spot.type}</span>
+            <h3>{spot.name}</h3>
+            <p>{spot.detail}</p>
+            <p class="parking-walk">步行參考：{spot.walk}</p>
+            <p class="parking-tip">{spot.tip}</p>
+            <p class="gov-link">
+              <a href={spot.mapsUrl} target="_blank" rel="noopener noreferrer">Google 地圖查看與導航 ↗</a>
+            </p>
+          </article>
+        ))}
+      </div>
+      <p class="notice">
+        停車資訊為編輯整理（核對時間 {siteInfo.syncDate}），各停車場是否收費、收費規則與營業狀態請以現場公告與 Google
+        地圖為準；廟會、節慶與大型活動日期間停車難度會提高，建議提早出發或改搭大眾運輸。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <SectionHeading
+        eyebrow="停車提醒"
+        title="機車、無障礙與雨天停車"
+        text="把常見的停車情境先想過一輪，抵達後就不必在巷弄裡來回找車位。"
+      />
+      <div class="grid-3">
+        {parkingTips.map((tip) => (
+          <article class="card"><h3>{tip.title}</h3><p>{tip.text}</p></article>
+        ))}
+      </div>
+      <p class="notice">
+        地點：{siteInfo.address}（Plus Code：{siteInfo.plusCode}）。夜間拍照請留意同行者、車流與溪畔動線。
+      </p>
     </div>
   </section>
 </BaseLayout>

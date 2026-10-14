@@ -49,7 +49,7 @@ export function buildPlaceSchema(site: URL | undefined): JsonLdRecord {
     '@context': 'https://schema.org',
     '@graph': [
       compactObject({
-        '@type': 'TouristAttraction',
+        '@type': ['TouristAttraction', 'Park'],
         ...base
       }),
       compactObject({

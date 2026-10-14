@@ -16,3 +16,10 @@
 - `pnpm check`：0 errors、0 warnings、0 hints。
 - `pnpm build`：Cloudflare Workers 生產構建成功。
 - `wrangler deploy --dry-run`：部署設定、Worker 模組與靜態資產驗證成功。
+
+## 2026-10-14 SEO 報告落地後的自檢
+
+- `public/_headers` 已建立（HSTS + 安全響應頭；依官方文件，`_headers` 僅作用於靜態資產，不作用於 Worker 產生的響應）。
+- `wrangler.jsonc` 維持 `assets.directory: ./dist` 與 `main: @astrojs/cloudflare/entrypoints/server`，與 @astrojs/cloudflare v14 官方文件一致，未改動。
+- 圖片已改名為描述性檔名（如 `tiangongtan-nine-dragon-pillar-night.jpg`），所有引用（site.ts、index/guide/plan.astro、global.css、memorial-card.ts）已同步；`sw.js` 快取版本升至 v2。
+- 本機 Windows 沙箱安裝依賴時受 safe-delete shim 影響會中斷，本次未做本地 build；改動皆為內容層級，已通過 read_lints（0 diagnostics）與逐檔檢視，構建以 CI/部署為準。
