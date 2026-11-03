@@ -170,7 +170,7 @@ import SectionHeading from '@/components/SectionHeading.astro';
       if (!b.items.length) continue;
       html += `<div class="advice-block"><div class="advice-head">${b.icon} ${b.title}</div>`;
       if (b.chips) {
-        const uniq = Array.from(new Set(b.items));
+        const uniq = Array.from(new Set<string>(b.items));
         html += `<div class="chip-row">${uniq
           .map((i: string) => `<span class="chip">${i}</span>`)
           .join('')}</div>`;

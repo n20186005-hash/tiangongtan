@@ -39,7 +39,7 @@ export function buildPlaceSchema(site: URL | undefined): JsonLdRecord {
       longitude: siteInfo.longitude
     },
     hasMap: mapsShareUrl,
-    sameAs: [mapsShareUrl, govTourismUrl].filter((value): value is string => Boolean(value)),
+    sameAs: [mapsShareUrl, govTourismUrl].filter(Boolean),
     isAccessibleForFree: true,
     openingHoursSpecification: siteInfo.openingHoursSpecification,
     priceRange: siteInfo.priceRange
